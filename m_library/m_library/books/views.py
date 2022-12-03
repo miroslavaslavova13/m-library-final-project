@@ -1,8 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
-def library(request):
+def all_books(request):
     return render(request, 'books/all-books.html')
+
+
+def add_book_to_favourites(request):
+    return redirect('home')
 
 
 def book_details(request, pk):

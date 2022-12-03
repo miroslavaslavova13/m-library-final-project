@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 
 
@@ -20,3 +20,7 @@ class EditPostView(UpdateView):
 
 class DeletePostView(DeleteView):
     template_name = 'blog/delete-blog-post.html'
+
+
+def comment_post(request):
+    return redirect('post details')
