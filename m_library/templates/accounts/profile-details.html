@@ -1,0 +1,80 @@
+{% extends 'base/base_profile.html' %}
+{% block page_content %}
+
+
+    <section class="site-section subpage-site-section section-contact-us">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-7">
+                    <img src="../../staticfiles/img/default.png" class="wdn-stretch rounded-corners" alt="">
+                </div>
+
+                <div class="col-sm-5">
+                    <div class="contact-info">
+                        <h2>Profile information</h2>
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <h3>Username</h3>
+                                <ul class="list-unstyled">
+                                    <li>Sydney, Australia</li>
+                                    <li>100 Mainstreet Center</li>
+                                </ul>
+
+                                <h3>Full Name</h3>
+                                <a href="mailto:pixelperfectmk@gmail.com" target="_blank">pixelperfectmk@gmail.com</a>
+
+                                <!--                                <h3>Fax</h3>-->
+                                <!--                                <p>(208) 333 9296</p>-->
+                            </div>
+                        </div>
+                    </div><!-- /.contact-info -->
+
+                    <div class="mt-20">
+                        <div class="panel-group accordion mb-50" id="accordion">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" aria-expanded="false" data-toggle="collapse"
+                                           data-parent="#accordion" href="#collapseOne">
+                                            Favourite books
+                                        </a>
+                                    </h4><!-- /.panel-title -->
+                                </div><!-- /.panel-heading -->
+                                <div aria-expanded="false" id="collapseOne" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li>
+                                                <a href="#" target="_blank">Third favourite book</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_blank">Third favourite book</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_blank">Third favourite book</a>
+                                            </li>
+                                        </ul>
+                                    </div><!-- /.panel-body -->
+                                </div><!-- /.panel-collapse -->
+                            </div><!-- /.panel -->
+
+                        </div><!-- /.panel-group -->
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="text-center mt-20">
+            <div class="col-sm-12">
+                <a href="#" class="btn btn-fill mb-10">Edit profile</a>
+                <a href="#" class="btn btn-green mb-10">Delete profile</a>
+            </div>
+        </div><!-- /.buttons -->
+
+    </section><!-- /.section-contact-us -->
+
+
+{% endblock %}

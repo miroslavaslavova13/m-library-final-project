@@ -1,0 +1,38 @@
+{% extends 'base/base_profile.html' %}
+{% block page_content %}
+
+
+    <div class="col-md-8 col-md-offset-2">
+        <h2 class="text-center heading-separator">Edit profile</h2>
+
+        <form>
+            <div class="row">
+                <div class="col-sm-15 mt-20">
+                    <div class="form-group">
+                        <label for="name">Username</label>
+                        <input type="title" class="form-control" id="username">
+
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email">
+
+                        <label for="name">Password</label>
+                        <input type="pages" class="form-control" id="password">
+
+                        <label for="name">Repeat password</label>
+                        <input type="pages" class="form-control" id="repassword">
+
+                        <label for="message">Profile Image</label>
+                        <textarea class="form-control form-control-comment" id="message"></textarea>
+                    </div>
+                </div>
+
+                <div class="text-center mt-20">
+                    <button class="btn btn-green">Edit</button>
+                </div>
+                <div class="col-sm-15 mt-20">
+
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

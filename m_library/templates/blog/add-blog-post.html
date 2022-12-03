@@ -1,0 +1,30 @@
+{% extends 'base/base_blog.html' %}
+{% block page_content %}
+
+    <div class="col-md-8 col-md-offset-2">
+        <h2 class="text-center heading-separator">Add post</h2>
+
+        <form>
+            <div class="row">
+                <div class="col-sm-15 mt-20">
+                    <div class="form-group">
+                        <label for="name">Title</label>
+                        <input type="title" class="form-control" id="username">
+
+                        <label for="post">Your post</label>
+                        <textarea class="form-control form-control-comment" id="message"></textarea>
+
+
+                    </div>
+                </div>
+
+                <div class="text-center mt-20">
+                    <button class="btn btn-green">Add</button>
+                </div>
+                <div class="col-sm-15 mt-20">
+
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base/base_library.html' %}
+{% block page_content %}
+
+    <div class="col-md-8 col-md-offset-2">
+        <h2 class="text-center heading-separator">Add book</h2>
+
+        <form>
+            <div class="row">
+                <div class="col-sm-15 mt-20">
+                    <div class="form-group">
+                        <label for="name">Title</label>
+                        <input type="title" class="form-control" id="username">
+
+                        <label for="email">Genre</label>
+                        <input type="email" class="form-control" id="email">
+
+                        <label for="name">Pages</label>
+                        <input type="pages" class="form-control" id="password">
+
+                        <label for="message">Description</label>
+                        <textarea class="form-control form-control-comment" id="message"></textarea>
+
+                        <label for="name">Upload book file</label>
+                        <input type="pages" class="form-control" id="repassword">
+
+                    </div>
+                </div>
+
+                <div class="text-center mt-20">
+                    <button class="btn btn-green">Add</button>
+                </div>
+                <div class="col-sm-15 mt-20">
+
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

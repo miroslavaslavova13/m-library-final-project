@@ -18,4 +18,4 @@ class LibraryUser(AbstractUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(LibraryUser, on_delete=models.CASCADE)
-    avatar = models.ImageField(default='default.png', upload_to='mediafiles/avatars')
+    avatar = models.ImageField(default='.../../staticfiles/default.png', upload_to='mediafiles/avatars')
