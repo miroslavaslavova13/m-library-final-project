@@ -1,33 +1,82 @@
 {% extends 'base/base_profile.html' %}
+{% load class_filter %}
 {% block page_content %}
 
 
     <div class="col-md-8 col-md-offset-2">
         <h2 class="text-center heading-separator">Edit profile</h2>
 
-        <form>
+        <form method="post" action="{% url 'edit profile' pk=object.pk %}">
             <div class="row">
                 <div class="col-sm-15 mt-20">
                     <div class="form-group">
-                        <label for="name">Username</label>
-                        <input type="title" class="form-control" id="username">
+                        <label for="name">Username:</label>
+                        {{ form.username.errors }}
+                        {{ form.username|add_class:'form-control' }}
 
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email">
+{#                        {{ form.username }}#}
+                    </div>
 
-                        <label for="name">Password</label>
-                        <input type="pages" class="form-control" id="password">
+                    <div class="col-sm-15 mt-20">
+                        <div class="form-group">
+                            <label for="email">E-mail:</label>
+                            {{ form.email.errors }}
+                            {{ form.email|add_class:'form-control' }}
 
-                        <label for="name">Repeat password</label>
-                        <input type="pages" class="form-control" id="repassword">
+{#                            {{ form.email }}#}
+                        </div>
+                    </div>
 
-                        <label for="message">Profile Image</label>
-                        <textarea class="form-control form-control-comment" id="message"></textarea>
+                    <div class="col-sm-15 mt-20">
+                        <div class="form-group">
+                            <label for="first name">First name:</label>
+                            {{ form.first_name|add_class:'form-control' }}
+
+{#                            {{ form.email }}#}
+                        </div>
+                    </div>
+
+                    <div class="col-sm-15 mt-20">
+                        <div class="form-group">
+                            <label for="last name">Last name:</label>
+                            {{ form.last_name|add_class:'form-control' }}
+
+{#                            {{ form.email }}#}
+                        </div>
+                    </div>
+
+                    <div class="col-sm-15 mt-20">
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            {{ form.password.errors }}
+                            {{ form.password|add_class:'form-control' }}
+
+{#                            {{ form.password1 }}#}
+                        </div>
+                    </div>
+{##}
+{#                    <div class="col-sm-15 mt-20">#}
+{#                        <div class="form-group">#}
+{#                            <label for="name">Repeat Password:</label>#}
+{#                            {{ form.password2.errors }}#}
+{#                            {{ form.password2|add_class:'form-control' }}#}
+{#                            #}
+{#                             {{ form.password2 }}#}
+{#                        </div>#}
+
+                        <div class="col-sm-15 mt-20">
+                        <div class="form-group">
+                            <label for="avatar">Avatar:</label>
+                            {{ form.avatar|add_class:'form-control' }}
+
+{#                             {{ form.avatar }}#}
+                        </div>
                     </div>
                 </div>
 
                 <div class="text-center mt-20">
                     <button class="btn btn-green">Edit</button>
+                    {% csrf_token %}
                 </div>
                 <div class="col-sm-15 mt-20">
 

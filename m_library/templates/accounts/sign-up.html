@@ -1,40 +1,48 @@
 {% extends 'base/base_profile.html' %}
+{% load class_filter %}
 {% block page_content %}
 
     <div class="col-md-8 col-md-offset-2">
         <h2 class="text-center heading-separator">Sign Up</h2>
-        <form>
+        <form method="post" action="{% url 'sign up' %}">
             <div class="row">
-                <div class="col-sm-15">
+
+
+                <div class="col-sm-15 mt-20">
                     <div class="form-group">
                         <label for="name">Username:</label>
-                        <input type="username" class="form-control" id="username">
+                        {{ form.username.errors }}
+                        {{ form.username|add_class:'form-control' }}
                     </div>
 
                     <div class="col-sm-15 mt-20">
                         <div class="form-group">
                             <label for="email">E-mail:</label>
-                            <input type="email" class="form-control" id="email">
+                            {{ form.email.errors }}
+                           {{ form.email|add_class:'form-control' }}
                         </div>
                     </div>
 
                     <div class="col-sm-15 mt-20">
                         <div class="form-group">
                             <label for="name">Password:</label>
-                            <input type="password" class="form-control" id="password">
+                            {{ form.password1.errors }}
+                            {{ form.password1|add_class:'form-control' }}
                         </div>
                     </div>
 
                     <div class="col-sm-15 mt-20">
                         <div class="form-group">
                             <label for="name">Repeat Password:</label>
-                            <input type="password" class="form-control" id="repassword">
+                            {{ form.password2.errors }}
+                            {{form.password2|add_class:'form-control'}}
                         </div>
                     </div>
                 </div>
 
                 <div class="text-center mt-20">
                     <button class="btn btn-green">Sign Up</button>
+                    {% csrf_token %}
                 </div>
             </div>
 

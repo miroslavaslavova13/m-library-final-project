@@ -4,8 +4,8 @@ from m_library.accounts.views import SignUpView, SignInView, SignOutView, Profil
     ProfileDeleteView
 
 urlpatterns = [
-    path('sign-up/', SignUpView.as_view(), name='sign up'),
     path('sign-in/', SignInView.as_view(), name='sign in'),
+    path('sign-up/', SignUpView.as_view(), name='sign up'),
     path('sign-out/', SignOutView.as_view(), name='sign out'),
     path('profile/<int:pk>/', include([
         path('', ProfileDetailsView.as_view(), name='profile details'),

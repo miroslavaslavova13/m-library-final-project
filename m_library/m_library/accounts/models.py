@@ -11,7 +11,7 @@ class LibraryUser(AbstractUser):
 
     email = models.EmailField(unique=True)
 
-    avatar = models.ImageField(default='staticfiles/img/default.png', upload_to='mediafiles/avatars')
+    avatar = models.ImageField(default='staticfiles/img/default.png', upload_to='avatars/')
 
     @property
     def get_full_name(self):
