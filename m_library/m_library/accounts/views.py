@@ -14,14 +14,18 @@ class SignUpView(CreateView):
     success_url = reverse_lazy('all books')
 
     def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, *kwargs)
+        response = super().post(request, *args, **kwargs)
 
         login(request, self.object)
+
         return response
 
 
 class SignInView(LoginView):
     template_name = 'accounts/sign-in.html'
+
+    def get_success_url(self):
+        return reverse_lazy('profile details', kwargs={'pk': self.request.user.pk})
 
 
 class SignOutView(LogoutView):

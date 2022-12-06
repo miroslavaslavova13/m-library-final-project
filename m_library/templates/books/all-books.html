@@ -15,98 +15,19 @@
         <div class="container">
 
             <div id="grid" class="row">
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["webdesign"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-1.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["mobileapp"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-2.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["illustration"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-3.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["branding"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-4.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["photography"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-5.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["illustration"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-6.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["mobileapp"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-7.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["uiux"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-8.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["mobileapp"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-9.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["photography"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-10.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["branding"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-11.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["webdesign"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-12.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
 
-                <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["webdesign"]'>
-                    <div class="portfolio-item">
-                        <img src="../../staticfiles/img/portfolio-12.jpg" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="../portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
+                {% for book in books %}
+
+                    <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["webdesign"]'>
+                        <div class="portfolio-item">
+                            <img src="{{book.cover}}" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">{{ book.title }}</h4>
+                            <a href="{% url 'book details' pk=book.pk %}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div><!-- /.portfolio-item -->
+                    </div>
+
+                {% endfor %}
+
             </div>
         </div>
 

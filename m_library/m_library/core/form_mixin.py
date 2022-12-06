@@ -3,12 +3,16 @@ class DisabledFormMixin:
     fields = {}
 
     def _disable_fields(self):
-        if self.disabled_fields == "__all__":
-            fields = self.fields.keys()
-        else:
-            fields = self.disabled_fields
+        # if self.disabled_fields == "__all__":
+        #     fields = self.fields.keys()
+        # else:
+        #     fields = self.disabled_fields
+        #
+        # for field_name in fields:
+        #     if field_name in self.fields:
+        #         field = self.fields[field_name]
+        #         field.widget.attrs['readonly'] = 'readonly'
+        #         field.widget.attrs['disabled'] = 'disabled'
 
-        for field_name in fields:
-            if field_name in self.fields:
-                field = self.fields[field_name]
-                field.widget.attrs['readonly'] = 'readonly'
+        for _, field in self.fields.items():
+            field.widget.attrs['readonly'] = 'readonly'

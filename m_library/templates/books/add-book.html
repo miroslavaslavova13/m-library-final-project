@@ -1,33 +1,41 @@
 {% extends 'base/base_library.html' %}
+{% load class_filter %}
 {% block page_content %}
 
     <div class="col-md-8 col-md-offset-2">
         <h2 class="text-center heading-separator">Add book</h2>
 
-        <form>
+        <form method="post" action="{% url 'add book' %}" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-sm-15 mt-20">
                     <div class="form-group">
-                        <label for="name">Title</label>
-                        <input type="title" class="form-control" id="username">
+                        <label for="name">*Title</label>
+                        {{ form.title|add_class:'form-control' }}
 
-                        <label for="email">Genre</label>
-                        <input type="email" class="form-control" id="email">
+                        <label for="email">*Author</label>
+                        {{ form.author|add_class:'form-control' }}
 
-                        <label for="name">Pages</label>
-                        <input type="pages" class="form-control" id="password">
+                        <label for="name">*Genre</label>
+                        {{ form.genre|add_class:'form-control' }}
 
-                        <label for="message">Description</label>
-                        <textarea class="form-control form-control-comment" id="message"></textarea>
+                        <label for="name">*Language</label>
+                        {{ form.language|add_class:'form-control' }}
 
-                        <label for="name">Upload book file</label>
-                        <input type="pages" class="form-control" id="repassword">
+                        <label for="name">*Description</label>
+                        {{ form.description|add_class:'form-control' }}
+
+                        <label for="name">Cover</label>
+                        {{ form.cover|add_class:'form-control' }}
+
+                        <label for="name">*Upload book file</label>
+                        {{ form.book_file|add_class:'form-control' }}
 
                     </div>
                 </div>
 
                 <div class="text-center mt-20">
                     <button class="btn btn-green">Add</button>
+                    {% csrf_token %}
                 </div>
                 <div class="col-sm-15 mt-20">
 

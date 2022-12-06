@@ -72,7 +72,7 @@
                                 <li><a href="{% url 'add post' %}">Add blog post</a></li>
                             </ul>
 
-                        <li><a href="{% url 'profile details' pk=request.object.pk %}">Profile</a></li>
+                        <li><a href="{% url 'profile details' pk=request.user.pk %}">Profile</a></li>
                         <!-- if user is logged in  -->
                         <li><a href="{% url 'sign out' %}">Sign Out</a></li>
 

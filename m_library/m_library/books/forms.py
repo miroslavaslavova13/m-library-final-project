@@ -16,6 +16,7 @@ class BookCreateForm(BookBaseForm):
 
 class BookEditForm(BookBaseForm):
     class Meta:
+        model = Book
         exclude = ('book_file', 'date_of_publication', 'user')
 
 
@@ -23,8 +24,8 @@ class BookDeleteForm(DisabledFormMixin, BookBaseForm):
     disabled_fields = '__all__'
 
     def __init__(self, *args, **kwargs):
-        self._disable_fields()
         super().__init__(*args, **kwargs)
+        self._disable_fields()
 
     def save(self, commit=True):
         if commit:
