@@ -1,31 +1,52 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect
-from django.urls import reverse
 
 from m_library.books.forms import BookCreateForm, BookEditForm, BookDeleteForm
-from m_library.books.models import Book
+from m_library.books.models import Book, BookFavourite
+from m_library.common.forms import SearchForm
 from m_library.core.utils import is_owner
 
 
 def all_books(request):
     books = Book.objects.all()
+    search_form = SearchForm(request.GET)
+    search_pattern = None
+
+    if search_form.is_valid():
+        search_pattern = search_form.cleaned_data['text']
+
+    if search_pattern:
+        books = books.filter(
+            Q(title__icontains=search_pattern) |
+            Q(author__icontains=search_pattern))
 
     context = {
-        'books': books
+        'books': books,
+        'search_form': search_form
     }
     return render(request, 'books/all-books.html', context)
 
 
-def add_book_to_favourites(request):
-    return redirect('home')
+@login_required
+def add_book_to_favourites(request, book_id):
+    user_added_to_favourites = BookFavourite.objects.filter(book_id=book_id, user_id=request.user.pk)
+
+    if user_added_to_favourites:
+        user_added_to_favourites.delete()
+    else:
+        BookFavourite.objects.create(book_id=book_id, user_id=request.user.pk)
+
+    return redirect(request.META['HTTP_REFERER'] + f'#book-{book_id}')
 
 
 def book_details(request, pk):
     book = Book.objects.filter(pk=pk).get()
+    book.is_favourite = BookFavourite.objects.filter(book_id=pk, user_id=request.user.pk).count() > 0
 
     context = {
         'book': book,
-        'is_owner': request.user == book.user
+        'is_owner': request.user == book.user,
     }
     return render(request, 'books/book-details.html', context)
 
@@ -71,6 +92,7 @@ def edit_book(request, pk):
     return render(request, 'books/edit-book.html', context)
 
 
+@login_required
 def delete_book(request, pk):
     book = Book.objects.filter(pk=pk).get()
 

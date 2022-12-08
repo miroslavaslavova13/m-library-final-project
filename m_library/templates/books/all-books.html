@@ -1,12 +1,16 @@
 {% extends 'base/base_library.html' %}
+{% load class_filter %}
 {% block page_content %}
 
     <div class="sidebar">
         <div class="text-center mt-20">
             <h4 class="widget-title">Search book</h4>
-            <form class="form-group">
-                <input type="text" class="form-control" placeholder="Search" required>
-                <button class="btn btn-green" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+            <form method="get" action="{% url 'all books' %}" class="form-group">
+                {{ search_form.text|add_class:'form-control' }}
+                <button class="btn btn-green">
+                    <i class="fa fa-search"></i>
+                </button>
+                {% csrf_token %}
             </form>
         </div><!-- /.search-form -->
     </div>
@@ -20,9 +24,10 @@
 
                     <div class="col-lg-3 col-md-4 col-xs-6" data-groups='["webdesign"]'>
                         <div class="portfolio-item">
-                            <img src="{{book.cover}}" class="img-res" alt="">
+                            <img src="{{ book.cover }}" class="img-res" alt="">
                             <h4 class="portfolio-item-title">{{ book.title }}</h4>
-                            <a href="{% url 'book details' pk=book.pk %}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                            <a href="{% url 'book details' pk=book.pk %}"><i class="fa fa-arrow-right"
+                                                                             aria-hidden="true"></i></a>
                         </div><!-- /.portfolio-item -->
                     </div>
 

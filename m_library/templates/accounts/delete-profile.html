@@ -7,11 +7,12 @@
 
             <form method="post" action="{% url 'delete profile' pk=object.pk %}">
                 {{ form }}
-            <div class="text-center mt-20">
-                <button class="btn btn-green">Delete</button>
-                <a class="btn btn-primary" href="javascript:history.back()">
-                    <button class="btn btn-green">Go back</button></a>
-            </div>
+                <div class="text-center mt-20">
+                    <button class="btn btn-green">Delete</button>
+                    <a class="btn btn-primary" href="javascript:history.back()">
+                        <button class="btn btn-green">Go back</button>
+                    </a>
+                </div>
                 {% csrf_token %}
 
             </form>

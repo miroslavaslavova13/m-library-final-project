@@ -4,10 +4,19 @@
     <div class="row mt-40">
         <div class="col-md-8 col-md-offset-2">
             <h2 class="text-center heading-separator">Are you sure you want to delete this post?</h2>
-            <div class="text-center mt-20">
-                <a href="#" class="btn btn-green mb-10">Delete</a>
-            </div>
+
+            <form method="post" action="{% url 'delete post' pk=object.pk %}">
+                {{ form }}
+
+                <div class="text-center mt-20">
+                    <button class="btn btn-green mb-10">Delete</button>
+                    {% csrf_token %}
+                    <a class="btn btn-primary" href="javascript:history.back()">
+                        <button class="btn btn-green">Go back</button>
+                    </a>
+                </div>
+
+            </form>
         </div>
     </div>
-
 {% endblock %}

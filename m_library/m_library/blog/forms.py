@@ -38,3 +38,10 @@ class PostCommentForm(forms.ModelForm):
     class Meta:
         model = BlogPostComment
         fields = ('text', )
+        widgets = {
+            'text': forms.Textarea(
+                attrs={
+                    'placeholder': 'Add comment...'
+                }
+            )
+        }

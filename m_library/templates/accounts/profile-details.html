@@ -42,21 +42,17 @@
                                         </a>
                                     </h4><!-- /.panel-title -->
                                 </div><!-- /.panel-heading -->
+                                {% for book in user_favourite_books %}
                                 <div aria-expanded="false" id="collapseOne" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul>
                                             <li>
-                                                <a href="#" target="_blank">Third favourite book</a>
-                                            </li>
-                                            <li>
-                                                <a href="#" target="_blank">Third favourite book</a>
-                                            </li>
-                                            <li>
-                                                <a href="#" target="_blank">Third favourite book</a>
+                                                <a href="{% url 'book details' pk=book.book.pk %}">{{ book.book.title }}</a>
                                             </li>
                                         </ul>
                                     </div><!-- /.panel-body -->
                                 </div><!-- /.panel-collapse -->
+                                {% endfor %}
                             </div><!-- /.panel -->
 
                         </div><!-- /.panel-group -->

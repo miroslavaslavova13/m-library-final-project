@@ -1,4 +1,5 @@
 {% extends 'base/base_blog.html' %}
+{% load class_filter %}
 {% block page_content %}
 
     <section class="site-section subpage-site-section section-blog">
@@ -7,113 +8,78 @@
                 <div class="col-md-8">
                     <article class="blog-post">
                         <div class="post-content">
-                            <h2 class="post-title">12 Essential Free Sketch Plugins</h2>
-                            <p>Sketch Measure helps designers organize and outline their work for developers, project
-                                managers, and other team members.</p>
-                            <p>But this is also incredibly useful to lone wolves who design & code all of their
-                                projects. With the Measure plugin you can outline elements showing specific width/height
-                                dimensions to get proper measurements at a glance.</p>
-                            <p>This includes all page elements like buttons, text, icons, and even major parts of the
-                                artboard. With Sketch Measure you can even export pages into HTML/CSS with page styles
-                                in-tact. Granted there are Adobe tools that can do this too. But having all this
-                                functionality right in Sketch makes your job that much easier.</p>
+                            <h2 class="post-title">{{ blogpost.title }}</h2>
+                            <p>{{ blogpost.description }}</p>
+
 
                             <div class="post-meta">
                                     <span class="post-author">
-                                        <a href="#"><img class="img-res" src="../../staticfiles/img/author.jpg" alt=""> John Smith</a>
+                                        <a href="#"><img class="img-res" src="../../staticfiles/img/author.jpg"
+                                                         alt="">{{ blogpost.user }}</a>
                                     </span>
                                 <span class="post-date">
-                                        <a href=""><i class="fa fa-calendar" aria-hidden="true"></i> September 21, 2016</a>
+                                        <a href=""><i class="fa fa-calendar"
+                                                      aria-hidden="true"></i>{{ blogpost.date_of_publication }}</a>
                                         </span>
                             </div><!-- /.post-meta -->
                         </div><!-- /.post-content -->
                     </article><!-- /.blog-post -->
+
+
                     <div id="PostComments" class="post-comments">
-                        <h3>3 Comments</h3>
-                        <div class="post-comment">
+                        <h3>{{ comments_count }} comments</h3>
 
-                            <img class="img-res" src="../../staticfiles/img/author-2.jpg" alt="">
+                        {% for comment in blogpost.blogpostcomment_set.all %}
+                            <div class="post-comment">
 
-                            <div class="post-comment-content">
+                                <img class="img-res" src="../../staticfiles/img/author-2.jpg" alt="">
 
-                                <div class="post-comment-content-details">
-                                    <p class="post-comment-author-name">Linda Smith</p>
-                                    <p class="post-comment-date"><i class="fa fa-calendar" aria-hidden="true"></i>Jan 2,
-                                        at 19:00</p>
-                                </div><!-- /.post-content-details -->
-                                <p class="comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                                <div class="post-comment-content">
 
-                                <p class="comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-
-
-                            </div><!-- /.post-comment-content -->
-                        </div><!-- /.post-comment -->
-
-                        <div class="post-comment">
-
-                            <img class="img-res" src="../../staticfiles/img/author-3.jpg" alt="">
-
-                            <div class="post-comment-content">
-
-                                <div class="post-comment-content-details">
-                                    <p class="post-comment-author-name">Marc Jones</p>
-                                    <p class="post-comment-date"><i class="fa fa-calendar" aria-hidden="true"></i>Jan 5,
-                                        at 23:33</p>
-                                </div><!-- /.post-content-details -->
-                                <p class="comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-
-                                <p class="comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                                    <div class="post-comment-content-details">
+                                        <p class="post-comment-author-name">{{ comment.user }}</p>
+                                        <p class="post-comment-date"><i class="fa fa-calendar"
+                                                                        aria-hidden="true"></i>{{ comment.publication_date_and_time }}
+                                        </p>
+                                    </div><!-- /.post-content-details -->
+                                    <p class="comment">{{ comment.text }}</p>
+                                </div><!-- /.post-comment-content -->
+                            </div><!-- /.post-comment -->
+                        {% endfor %}
 
 
-                            </div><!-- /.post-comment-content -->
-                        </div><!-- /.post-comment -->
-
-                        <div class="post-comment">
-
-                            <img class="img-res" src="../../staticfiles/img/author-4.jpg" alt="">
-
-                            <div class="post-comment-content">
-
-                                <div class="post-comment-content-details">
-                                    <p class="post-comment-author-name">Michael Sky</p>
-                                    <p class="post-comment-date"><i class="fa fa-calendar" aria-hidden="true"></i>Jan 5,
-                                        at 11:45</p>
-                                </div><!-- /.post-content-details -->
-                                <p class="comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-
-                                <p class="comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-
-
-                            </div><!-- /.post-comment-content -->
-                        </div><!-- /.post-comment -->
                     </div><!-- /#PostComments -->
                     <div class="respond">
                         <h3>Post a Comment</h3>
-                        <form class="form-horizontal">
-                            <textarea class="form-control form-control-comment" type="text" placeholder="Your Comment*"
-                                      required></textarea>
+                        <form method="post" action="{% url 'comment post' post_id=object.pk %}" class="form-horizontal">
+                            {#                            <textarea class="form-control form-control-comment" type="text" placeholder="Your Comment*"#}
+                            {#                                      required></textarea>#}
+                            {{ comment_form.text|add_class:'form-control form-control-comment' }}
+
                             <button class="btn btn-green">Add a comment</button>
+                            {% csrf_token %}
                         </form>
                     </div><!-- /.respond -->
                 </div>
                 <aside class="col-md-4">
                     <div class="sidebar">
+
+                        {% if is_owner %}
+                            <a href="{% url 'edit post' pk=object.pk %}" class="btn btn-green mb-10">Edit post</a>
+                            <a href="{% url 'delete post' pk=object.pk %}" class="btn btn-fill mb-10">Delete post</a>
+                        {% endif %}
+
+                        <div class="col-sm-15 mt-20"></div>
                         <div class="widget widget-recent-posts">
                             <h4 class="widget-title">Recent posts</h4>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Inside The Lipsum</a></li>
-                                <li><a href="#">Oscar Wilde</a></li>
-                                <li><a href="#">Jeffrey Ween</a></li>
-                                <li><a href="#">Responsive Design</a></li>
-                                <li><a href="#">Development</a></li>
-                            </ul>
+                            {% for post in recent_posts %}
+                                <ul class="list-unstyled">
+                                    <li><a href="#">{{ post.title }}</a></li>
+                                </ul>
+                            {% endfor %}
                         </div><!-- /.widget-recent-posts -->
+
+
                     </div><!-- /.sidebar -->
                 </aside>
             </div>

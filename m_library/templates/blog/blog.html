@@ -1,79 +1,37 @@
 {% extends 'base/base_blog.html' %}
+{% load class_filter %}
 {% block page_content %}
 
     <section class="site-section subpage-site-section section-blog">
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <article class="blog-post">
+                    {% for post in posts %}
 
-                        <div class="post-content">
-                            <h3 class="post-title"><a href="../blog-post.html">12 Essential Free Sketch Plugins</a></h3>
-                            <p>Sketch Measure helps designers organize and outline their work for developers, project
-                                managers, and other team members</p>
-                            <div class="text-right">
-                                <a class="read-more" href="../blog-post.html">Read more</a>
-                            </div>
-                            <div class="post-meta">
+                        <article class="blog-post">
+
+                            <div class="post-content">
+                                <h3 class="post-title"><a
+                                        href="{% url 'post details' pk=post.pk %}">{{ post.title }}</a></h3>
+                                <p>{{ post.description }}</p>
+                                <div class="text-right">
+                                    <a class="read-more" href="{% url 'post details' pk=post.pk %}">Read more</a>
+                                </div>
+                                <div class="post-meta">
                                     <span class="post-author">
-                                        <a href="#"><img class="img-res" src="../../staticfiles/img/author.jpg" alt="">John Smith</a>
+                                        <a href=""><img class="img-res" src="../../staticfiles/img/author.jpg"
+                                                        alt="">{{ post.user }}</a>
                                     </span>
-                                <span class="post-date">
+                                    <span class="post-date">
                                         <a href=""><i class="fa fa-calendar"
-                                                      aria-hidden="true"></i>September 21, 2016</a>
+                                                      aria-hidden="true"></i>{{ post.date_of_publication }}</a>
                                         </span>
 
-                            </div><!-- /.post-meta -->
-                        </div><!-- /.post-content -->
-                    </article><!-- /.blog-post -->
+                                </div><!-- /.post-meta -->
+                            </div><!-- /.post-content -->
+                        </article><!-- /.blog-post -->
 
-                    <article class="blog-post">
-
-                        <div class="post-content">
-                            <h3 class="post-title"><a href="../blog-post.html">Customize WordPress Themes Easily</a>
-                            </h3>
-                            <p>This guide is intended for those with some knowledge of HTML and CSS, but aren’t too
-                                familiar with the way WordPress themes work. If you don’t know much about web design but
-                                you are interested, that’s good too. We’ll explain everything each step of the way.</p>
-                            <div class="text-right">
-                                <a class="read-more" href="../blog-post.html">Read more</a>
-                            </div>
-                            <div class="post-meta">
-                                    <span class="post-author">
-                                        <a href="#"><img class="img-res" src="../../staticfiles/img/author-3.jpg"
-                                                         alt="">Marc Jones</a>
-                                    </span>
-                                <span class="post-date">
-                                        <a href=""><i class="fa fa-calendar" aria-hidden="true"></i>August 25, 2016</a>
-                                        </span>
-
-                            </div><!-- /.post-meta -->
-                        </div><!-- /.post-content -->
-                    </article><!-- /.blog-post -->
-
-                    <article class="blog-post">
-
-                        <div class="post-content">
-                            <h3 class="post-title"><a href="../blog-post.html">Creative Website Template PSD</a></h3>
-                            <p>Free PSD web templates can be found everywhere on the internet. Most of them are ugly,
-                                some of them look nice, but rarely will you find anything great. Since Adobe Photoshop
-                                is one of those „easy to use – hard to master“ programs, many beginners and
-                                professionals decide to use PSD templates for their first website.</p>
-                            <div class="text-right">
-                                <a class="read-more" href="../blog-post.html">Read more</a>
-                            </div>
-                            <div class="post-meta">
-                                    <span class="post-author">
-                                        <a href="#"><img class="img-res" src="../../staticfiles/img/author-2.jpg"
-                                                         alt="">Linda Smith</a>
-                                    </span>
-                                <span class="post-date">
-                                        <a href=""><i class="fa fa-calendar" aria-hidden="true"></i>July 11, 2016</a>
-                                        </span>
-
-                            </div><!-- /.post-meta -->
-                        </div><!-- /.post-content -->
-                    </article><!-- /.blog-post -->
+                    {% endfor %}
 
                     <div class="ui-pagination mt-50">
                         <div class="row">
@@ -99,17 +57,22 @@
 
                         <div class="widget search-form">
                             <h4 class="widget-title">Search the blog</h4>
-                            <form class="form-group">
-                                <input type="text" class="form-control" placeholder="Search" required>
-                                <button class="btn btn-green" type="button"><i class="fa fa-search"
-                                                                               aria-hidden="true"></i></button>
+                            <form method="get" action="{% url 'blog' %}" class="form-group">
+
+                                {{ search_form.text|add_class:'form-control' }}
+
+                                <button class="btn btn-green">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                {% csrf_token %}
                             </form>
+
 
                             <aside class="col-md-4">
                                 <div class="buttons mt-50">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <a href="#" class="btn btn-gray mb-10">Add Post</a>
+                                            <a href="{% url 'add post' %}" class="btn btn-gray mb-10">Add Post</a>
                                         </div>
                                     </div>
                                 </div>

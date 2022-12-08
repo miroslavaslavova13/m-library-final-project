@@ -1,18 +1,20 @@
 {% extends 'base/base_blog.html' %}
+{% load class_filter %}
 {% block page_content %}
 
     <div class="col-md-8 col-md-offset-2">
         <h2 class="text-center heading-separator">Add post</h2>
 
-        <form>
+        <form method="post" action="{% url 'add post' %}">
             <div class="row">
                 <div class="col-sm-15 mt-20">
                     <div class="form-group">
-                        <label for="name">Title</label>
-                        <input type="title" class="form-control" id="username">
+                        <label for="name">*Title</label>
+                        {{ form.title|add_class:'form-control' }}
 
-                        <label for="post">Your post</label>
-                        <textarea class="form-control form-control-comment" id="message"></textarea>
+                        <label for="post">*Your post description</label>
+                        {{ form.description|add_class:'form-control form-control-comment' }}
+
 
 
                     </div>
@@ -20,6 +22,7 @@
 
                 <div class="text-center mt-20">
                     <button class="btn btn-green">Add</button>
+                    {% csrf_token %}
                 </div>
                 <div class="col-sm-15 mt-20">
 

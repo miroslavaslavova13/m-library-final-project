@@ -2,100 +2,107 @@
 {% load static %}
 {% block page_content %}
 
-    <section class="site-section subpage-site-section section-project">
+<section class="site-section subpage-site-section section-project">
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    {#                    <div class="project-img">#}
-                    {#                        <img src="{{ book.cover }}" class="img-res" alt="">#}
-                    {#                    </div><!-- /.project-img -->#}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {#                    <div class="project-img">#}
+                {#                        <img src="{{ book.cover }}" class="img-res" alt="">#}
+                {#                    </div><!-- /.project-img -->#}
 
-                    <div class="col-sm-7">
-                        <img src="{{ book.cover }}" class="wdn-stretch rounded-corners" alt="">
-                    </div>
-
+                <div class="col-sm-7">
+                    <img src="{{ book.cover }}" class="wdn-stretch rounded-corners" alt="">
                 </div>
 
-                <aside class="col-md-4">
-                    <h2>{{ book.title }}</h2>
-                    <div class="project-info">
+            </div>
 
-                        <div class="project-date-category">
-                            <p><span>Author:</span>{{ book.author }}</p>
-                            <p><span>Genre:</span>{{ book.author }}</p>
-                            <p><span>Language:</span>{{ book.language }}</p>
-                            <p><span>Date:</span>{{ book.date_of_publication }}</p>
+            <aside class="col-md-4">
+                <h2>{{ book.title }}</h2>
+                <div class="project-info">
 
-                            <p><span>Description:</span></p>
+                    <div class="project-date-category">
+                        <p><span>Author:</span>{{ book.author }}</p>
+                        <p><span>Genre:</span>{{ book.author }}</p>
+                        <p><span>Language:</span>{{ book.language }}</p>
+                        <p><span>Date:</span>{{ book.date_of_publication }}</p>
 
-                            <p class="project-description">{{ book.description }}</p>
-                        </div><!-- /.project-cat -->
+                        <p><span>Description:</span></p>
 
-                    </div><!-- /.project-description -->
+                        <p class="project-description">{{ book.description }}</p>
+                    </div><!-- /.project-cat -->
+
+                </div><!-- /.project-description -->
 
 
-                    <div class="buttons mt-50">
-                        <div class="row">
-                            <div class="col-sm-10">
-                                <a href="#" class="btn mb-10">Add to favourites</a>
-                                <a href="#" class="btn btn-border mb-10">Remove from favourites</a>
+                <div class="buttons mt-50">
+                    <div class="row">
+                        <div class="col-sm-10">
 
-                                {% if is_owner %}
-                                    <a href="{% url 'edit book' pk=book.pk %}" class="btn btn-fill mb-10">Edit book</a>
-                                    <a href="{% url 'delete book' pk=book.pk %}" class="btn btn-green mb-10">Delete book</a>
+                            <a href="{% url 'add to favourites' book_id=book.pk %}" class="btn btn-border mb-10">
+                                {% if not book.is_favourite %}
+                                    Add to favourites
+                                {% else %}
+                                    Remove from favourites
                                 {% endif %}
-                            </div>
+                            </a>
+
+                            {% if is_owner %}
+                                <a href="{% url 'edit book' pk=book.pk %}" class="btn btn-green mb-10">Edit book</a>
+                                <a href="{% url 'delete book' pk=book.pk %}" class="btn btn-fill mb-10">Delete
+                                    book</a>
+                            {% endif %}
                         </div>
-                    </div><!-- /.buttons -->
-                </aside>
-                {#            </div>#}
-            </div>
+                    </div>
+                </div><!-- /.buttons -->
+            </aside>
+            {#            </div>#}
         </div>
+    </div>
 
-    </section><!-- /.section-project -->
-    <section class="site-section subpage-site-section section-related-projects">
-        <div class="container">
-            <div class="text-left">
-                <h2>Other books</h2>
-            </div>
-            <div class="row">
-
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <div class="portfolio-item">
-                        <img src="{% static 'img/portfolio-1.jpg' %}" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <div class="portfolio-item">
-                        <img src="{% static 'img/portfolio-1.jpg' %}" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <div class="portfolio-item">
-                        <img src="{% static 'img/portfolio-1.jpg' %}" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <div class="portfolio-item">
-                        <img src="{% static 'img/portfolio-1.jpg' %}" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-
-
-            </div>
+</section><!-- /.section-project -->
+<section class="site-section subpage-site-section section-related-projects">
+    <div class="container">
+        <div class="text-left">
+            <h2>Other books</h2>
         </div>
-    </section><!-- /.section-portfolio -->
+        <div class="row">
+
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <div class="portfolio-item">
+                    <img src="{% static 'img/portfolio-1.jpg' %}" class="img-res" alt="">
+                    <h4 class="portfolio-item-title">Portfolio item</h4>
+                    <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                </div><!-- /.portfolio-item -->
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <div class="portfolio-item">
+                    <img src="{% static 'img/portfolio-1.jpg' %}" class="img-res" alt="">
+                    <h4 class="portfolio-item-title">Portfolio item</h4>
+                    <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                </div><!-- /.portfolio-item -->
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <div class="portfolio-item">
+                    <img src="{% static 'img/portfolio-1.jpg' %}" class="img-res" alt="">
+                    <h4 class="portfolio-item-title">Portfolio item</h4>
+                    <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                </div><!-- /.portfolio-item -->
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <div class="portfolio-item">
+                    <img src="{% static 'img/portfolio-1.jpg' %}" class="img-res" alt="">
+                    <h4 class="portfolio-item-title">Portfolio item</h4>
+                    <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                </div><!-- /.portfolio-item -->
+            </div>
+
+
+        </div>
+    </div>
+</section><!-- /.section-portfolio -->
 
 {% endblock %}

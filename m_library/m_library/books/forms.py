@@ -34,13 +34,3 @@ class BookDeleteForm(DisabledFormMixin, BookBaseForm):
 
         return self.instance
 
-
-class SearchBookForm(forms.Form):
-    searched = forms.CharField(
-        max_length=100,
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'Search by book title or author...'
-            }
-        ),
-        required=False)

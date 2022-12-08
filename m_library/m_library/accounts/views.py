@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
 from m_library.accounts.forms import UserCreateForm, UserEditForm
+from m_library.books.models import BookFavourite
 
 UserModel = get_user_model()
 
@@ -25,7 +26,7 @@ class SignInView(LoginView):
     template_name = 'accounts/sign-in.html'
 
     def get_success_url(self):
-        return reverse_lazy('profile details', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy('all books')
 
 
 class SignOutView(LogoutView):
@@ -35,6 +36,12 @@ class SignOutView(LogoutView):
 class ProfileDetailsView(DetailView):
     template_name = 'accounts/profile-details.html'
     model = UserModel
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_favourite_books'] = BookFavourite.objects.filter(user_id=self.request.user.pk)
+
+        return context
 
 
 class ProfileEditView(UpdateView):
