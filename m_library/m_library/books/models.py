@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import RESTRICT
 
+from m_library.core.validators import validate_only_letters
+
 UserModel = get_user_model()
 
 
@@ -13,13 +15,16 @@ class Book(models.Model):
 
     title = models.CharField(max_length=MAX_TITLE_LEN, null=False, blank=False)
 
-    author = models.CharField(max_length=MAX_AUTHOR_NAME_LEN, null=False, blank=False)
+    author = models.CharField(max_length=MAX_AUTHOR_NAME_LEN, validators=(validate_only_letters,), null=False,
+                              blank=False)
 
-    cover = models.ImageField(default='staticfiles/img/default_book_cover.png', upload_to='mediafiles/books_covers/', null=False, blank=True)
+    cover = models.ImageField(default='staticfiles/img/default_book_cover.png', upload_to='mediafiles/books_covers/',
+                              null=False, blank=True)
 
-    language = models.CharField(max_length=MAX_LANGUAGE_LEN, null=False, blank=False)
+    language = models.CharField(max_length=MAX_LANGUAGE_LEN, validators=(validate_only_letters,), null=False,
+                                blank=False)
 
-    genre = models.CharField(max_length=MAX_GENRE_LEN, null=False, blank=False)
+    genre = models.CharField(max_length=MAX_GENRE_LEN, validators=(validate_only_letters,), null=False, blank=False)
 
     book_file = models.FileField(upload_to='mediafiles/books/', null=False, blank=False)
 
