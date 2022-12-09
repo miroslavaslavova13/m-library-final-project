@@ -1,0 +1,33 @@
+{% extends 'base/base_blog.html' %}
+{% load static %}
+{% load class_filter %}
+{% block page_content %}
+
+    <section class="site-section subpage-site-section section-blog">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+
+                    <div class="respond">
+                        <h3>Post a Comment</h3>
+                        <form method="post" action="{% url 'edit comment' post_id=post_id pk=object.pk%}" class="form-horizontal">
+
+                            {{ form.text|add_class:'form-control form-control-comment' }}
+                            <button class="btn btn-green">Add a comment</button>
+                            {% csrf_token %}
+                        </form>
+                    </div><!-- /.respond -->
+                </div>
+                <aside class="col-md-4">
+                    <div class="sidebar">
+
+
+
+
+                    </div><!-- /.sidebar -->
+                </aside>
+            </div>
+        </div>
+    </section><!-- /.section-portfolio -->
+
+{% endblock %}

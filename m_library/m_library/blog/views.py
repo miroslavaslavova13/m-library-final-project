@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 
-from m_library.blog.forms import PostCreateForm, PostEditForm, PostCommentForm
-from m_library.blog.models import BlogPost
+from m_library.blog.forms import PostCreateForm, PostEditForm, PostCommentForm, PostCommentEditForm
+from m_library.blog.models import BlogPost, BlogPostComment
 from m_library.common.forms import SearchForm
 
 
@@ -88,3 +88,29 @@ def comment_post(request, post_id):
             comment.user = request.user
             comment.save()
             return redirect('post details', pk=post.pk)
+
+@login_required
+class EditCommentView(UpdateView):
+    model = BlogPostComment
+    form_class = PostCommentEditForm
+    template_name = 'blog/edit-comment.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post_id'] = BlogPostComment.objects.filter(pk=self.object.pk).get().blog_post_id
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('post details',
+                            kwargs={'pk': BlogPostComment.objects.filter(pk=self.object.pk).get().blog_post_id})
+
+@login_required
+class DeleteCommentView(DeleteView):
+    model = BlogPostComment
+
+    def get(self, *args, **kwargs):
+        return self.post(*args, **kwargs)
+
+    def get_success_url(self):
+        return reverse_lazy('post details',
+                            kwargs={'pk': BlogPostComment.objects.filter(pk=self.object.pk).get().blog_post_id})

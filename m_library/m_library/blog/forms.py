@@ -45,3 +45,14 @@ class PostCommentForm(forms.ModelForm):
                 }
             )
         }
+
+
+class PostCommentEditForm(PostCommentForm):
+    pass
+
+
+class PostCommentDeleteForm(PostCommentForm):
+    def save(self, commit=True):
+        if commit:
+            self.instance.delete()
+        return self.instance

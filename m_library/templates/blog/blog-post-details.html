@@ -1,4 +1,5 @@
 {% extends 'base/base_blog.html' %}
+{% load static %}
 {% load class_filter %}
 {% block page_content %}
 
@@ -45,6 +46,17 @@
                                     <p class="comment">{{ comment.text }}</p>
                                 </div><!-- /.post-comment-content -->
                             </div><!-- /.post-comment -->
+
+                            <div class="text-right comment-reply">
+                                <a href="{% url 'edit comment' post_id=object.pk pk=comment.pk%}">
+                                    <img class="edit-img" src="{% static 'img/edit-icon.png' %} " style="height: 16px;"
+                                         alt="edit button">
+                                </a>
+                                <a href="{% url 'delete comment' post_id=object.pk pk=comment.pk%}">
+                                    <img class="edit-img" src="{% static 'img/delete-icon.png' %} " style="height: 16px;"
+                                         alt="edit button">
+                                </a>
+                            </div>
                         {% endfor %}
 
 
@@ -52,8 +64,6 @@
                     <div class="respond">
                         <h3>Post a Comment</h3>
                         <form method="post" action="{% url 'comment post' post_id=object.pk %}" class="form-horizontal">
-                            {#                            <textarea class="form-control form-control-comment" type="text" placeholder="Your Comment*"#}
-                            {#                                      required></textarea>#}
                             {{ comment_form.text|add_class:'form-control form-control-comment' }}
 
                             <button class="btn btn-green">Add a comment</button>
