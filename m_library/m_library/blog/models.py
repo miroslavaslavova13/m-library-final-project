@@ -22,7 +22,7 @@ class BlogPostComment(models.Model):
 
     publication_date_and_time = models.DateTimeField(auto_now_add=True, blank=True, null=False)
 
-    blog_post = models.ForeignKey(BlogPost, on_delete=models.RESTRICT, null=False, blank=True)
+    blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, null=False, blank=True)
 
     user = models.ForeignKey(UserModel, on_delete=RESTRICT)
 

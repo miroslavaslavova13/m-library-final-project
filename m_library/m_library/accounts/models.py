@@ -7,13 +7,13 @@ from m_library.core.validators import validate_only_letters
 class LibraryUser(AbstractUser):
     MAX_LEN_NAME = 30
 
-    first_name = models.CharField(max_length=MAX_LEN_NAME, validators=(validate_only_letters,))
+    first_name = models.CharField(max_length=MAX_LEN_NAME, validators=(validate_only_letters,), null=False, blank=True)
 
-    last_name = models.CharField(max_length=MAX_LEN_NAME, validators=(validate_only_letters, ))
+    last_name = models.CharField(max_length=MAX_LEN_NAME, validators=(validate_only_letters, ), null=False, blank=True)
 
     email = models.EmailField(unique=True)
 
-    avatar = models.ImageField(default='staticfiles/img/default.png', upload_to='avatars/')
+    avatar = models.ImageField(default='../staticfiles/img/default.png', upload_to='avatars/')
 
     @property
     def get_full_name(self):

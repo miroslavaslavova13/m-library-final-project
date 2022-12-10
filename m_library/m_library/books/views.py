@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 from m_library.books.forms import BookCreateForm, BookEditForm, BookDeleteForm
 from m_library.books.models import Book, BookFavourite
@@ -76,6 +78,8 @@ def edit_book(request, pk):
     if not is_owner(request, book):
         return redirect('book details', pk=pk)
 
+    print(request.method)
+
     if request.method == 'GET':
         form = BookEditForm(instance=book)
     else:
@@ -102,7 +106,7 @@ def delete_book(request, pk):
     if request.method == 'GET':
         form = BookDeleteForm(instance=book)
     else:
-        form = BookDeleteForm(request.POST, instance=book)
+        form = BookDeleteForm(request.POST or None, instance=book)
         if form.is_valid():
             form.save()
             return redirect('all books')

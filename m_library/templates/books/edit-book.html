@@ -5,7 +5,7 @@
     <div class="col-md-8 col-md-offset-2">
         <h2 class="text-center heading-separator">Edit book</h2>
 
-        <form method="post" action="{% url 'edit book' pk=pk %}" enctype="multipart/form-data">
+        <form method="post" action="{% url 'edit book' pk=pk %}">
             <div class="row">
                 <div class="col-sm-15 mt-20">
                     <div class="form-group">
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="text-center mt-20">
-                    <button class="btn btn-green">Edit</button>
+                    <button class="btn btn-green" type="submit">Edit</button>
                     {% csrf_token %}
                 </div>
                 <div class="col-sm-15 mt-20">

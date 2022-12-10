@@ -18,7 +18,7 @@ class Book(models.Model):
     author = models.CharField(max_length=MAX_AUTHOR_NAME_LEN, validators=(validate_only_letters,), null=False,
                               blank=False)
 
-    cover = models.ImageField(default='staticfiles/img/default_book_cover.png', upload_to='mediafiles/books_covers/',
+    cover = models.ImageField(default='../staticfiles/img/default_book_cover.png', upload_to='books_covers/',
                               null=False, blank=True)
 
     language = models.CharField(max_length=MAX_LANGUAGE_LEN, validators=(validate_only_letters,), null=False,
@@ -26,7 +26,7 @@ class Book(models.Model):
 
     genre = models.CharField(max_length=MAX_GENRE_LEN, validators=(validate_only_letters,), null=False, blank=False)
 
-    book_file = models.FileField(upload_to='mediafiles/books/', null=False, blank=False)
+    book_file = models.FileField(upload_to='books/', null=False, blank=False)
 
     description = models.TextField(null=False, blank=False)
 

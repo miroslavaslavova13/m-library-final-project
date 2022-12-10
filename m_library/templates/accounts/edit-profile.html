@@ -6,7 +6,7 @@
     <div class="col-md-8 col-md-offset-2">
         <h2 class="text-center heading-separator">Edit profile</h2>
 
-        <form method="post" action="{% url 'edit profile' pk=object.pk %}">
+        <form method="post" action="{% url 'edit profile' pk=object.pk %}" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-sm-15 mt-20">
                     <div class="form-group">
@@ -14,7 +14,7 @@
                         {{ form.username.errors }}
                         {{ form.username|add_class:'form-control' }}
 
-{#                        {{ form.username }}#}
+                        {#                        {{ form.username }}#}
                     </div>
 
                     <div class="col-sm-15 mt-20">
@@ -22,8 +22,6 @@
                             <label for="email">E-mail:</label>
                             {{ form.email.errors }}
                             {{ form.email|add_class:'form-control' }}
-
-{#                            {{ form.email }}#}
                         </div>
                     </div>
 
@@ -31,8 +29,6 @@
                         <div class="form-group">
                             <label for="first name">First name:</label>
                             {{ form.first_name|add_class:'form-control' }}
-
-{#                            {{ form.email }}#}
                         </div>
                     </div>
 
@@ -40,48 +36,41 @@
                         <div class="form-group">
                             <label for="last name">Last name:</label>
                             {{ form.last_name|add_class:'form-control' }}
-
-{#                            {{ form.email }}#}
                         </div>
                     </div>
 
                     <div class="col-sm-15 mt-20">
                         <div class="form-group">
-                            <label for="password">Password:</label>
+                            <label for="password" type="password">Password:</label>
                             {{ form.password.errors }}
-                            {{ form.password|add_class:'form-control' }}
+                            <a href="../password/"> {{ form.password|add_class:'form-control' }}</a>
 
-{#                            {{ form.password1 }}#}
                         </div>
                     </div>
-{##}
+
 {#                    <div class="col-sm-15 mt-20">#}
 {#                        <div class="form-group">#}
 {#                            <label for="name">Repeat Password:</label>#}
 {#                            {{ form.password2.errors }}#}
 {#                            {{ form.password2|add_class:'form-control' }}#}
-{#                            #}
-{#                             {{ form.password2 }}#}
 {#                        </div>#}
 
                         <div class="col-sm-15 mt-20">
-                        <div class="form-group">
-                            <label for="avatar">Avatar:</label>
-                            {{ form.avatar|add_class:'form-control' }}
-
-{#                             {{ form.avatar }}#}
+                            <div class="form-group">
+                                <label for="avatar">Avatar:</label>
+                                {{ form.avatar|add_class:'form-control' }}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="text-center mt-20">
-                    <button class="btn btn-green">Edit</button>
-                    {% csrf_token %}
-                </div>
-                <div class="col-sm-15 mt-20">
+                    <div class="text-center mt-20">
+                        <button class="btn btn-green">Edit</button>
+                        {% csrf_token %}
+                    </div>
+                    <div class="col-sm-15 mt-20">
 
+                    </div>
                 </div>
-            </div>
         </form>
     </div>
 {% endblock %}

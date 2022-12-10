@@ -15,7 +15,7 @@
 
                             <div class="post-meta">
                                     <span class="post-author">
-                                        <a href="#"><img class="img-res" src="../../staticfiles/img/author.jpg"
+                                        <a href="#"><img class="img-res" src="/media/{{ blogpost.user.avatar }}"
                                                          alt="">{{ blogpost.user }}</a>
                                     </span>
                                 <span class="post-date">
@@ -33,7 +33,7 @@
                         {% for comment in blogpost.blogpostcomment_set.all %}
                             <div class="post-comment">
 
-                                <img class="img-res" src="../../staticfiles/img/author-2.jpg" alt="">
+                                <img class="img-res" src="/media/{{ comment.user.avatar }}" alt="">
 
                                 <div class="post-comment-content">
 
@@ -47,6 +47,8 @@
                                 </div><!-- /.post-comment-content -->
                             </div><!-- /.post-comment -->
 
+                            {% if comment.user == request.user %}
+
                             <div class="text-right comment-reply">
                                 <a href="{% url 'edit comment' post_id=object.pk pk=comment.pk%}">
                                     <img class="edit-img" src="{% static 'img/edit-icon.png' %} " style="height: 16px;"
@@ -57,6 +59,7 @@
                                          alt="edit button">
                                 </a>
                             </div>
+                            {% endif %}
                         {% endfor %}
 
 

@@ -1,5 +1,7 @@
+from django import forms
 from django.contrib.auth import login, get_user_model
 from django.contrib.auth.views import LoginView, LogoutView
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
@@ -14,12 +16,10 @@ class SignUpView(CreateView):
     form_class = UserCreateForm
     success_url = reverse_lazy('all books')
 
-    def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, **kwargs)
-
-        login(request, self.object)
-
-        return response
+    # def post(self, request, *args, **kwargs):
+    #     form = UserCreateForm(request.POST)
+    #     if form.is_valid():
+    #         login(request, self.request.user)
 
 
 class SignInView(LoginView):
@@ -48,6 +48,8 @@ class ProfileEditView(UpdateView):
     template_name = 'accounts/edit-profile.html'
     model = UserModel
     fields = ('username', 'email', 'first_name', 'last_name', 'password', 'avatar')
+
+    #change the password
 
     def get_success_url(self):
         return reverse_lazy('profile details', kwargs={'pk': self.request.user.pk})

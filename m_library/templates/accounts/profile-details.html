@@ -42,17 +42,19 @@
                                         </a>
                                     </h4><!-- /.panel-title -->
                                 </div><!-- /.panel-heading -->
-                                {% for book in user_favourite_books %}
+
                                 <div aria-expanded="false" id="collapseOne" class="panel-collapse collapse">
                                     <div class="panel-body">
-                                        <ul>
+                                        {% for book in user_favourite_books %}
+                                    <ul>
                                             <li>
                                                 <a href="{% url 'book details' pk=book.book.pk %}">{{ book.book.title }}</a>
                                             </li>
                                         </ul>
+                                         {% endfor %}
                                     </div><!-- /.panel-body -->
                                 </div><!-- /.panel-collapse -->
-                                {% endfor %}
+
                             </div><!-- /.panel -->
 
                         </div><!-- /.panel-group -->
@@ -65,8 +67,8 @@
 
         <div class="text-center mt-20">
             <div class="col-sm-12">
-                <a href="{% url 'edit profile' pk=request.user.pk  %}" class="btn btn-fill mb-10">Edit profile</a>
-                <a href="{% url 'delete profile' pk=request.user.pk  %}" class="btn btn-green mb-10">Delete profile</a>
+                <a href="{% url 'edit profile' pk=request.user.pk  %}" class="btn btn-green mb-10">Edit profile</a>
+                <a href="{% url 'delete profile' pk=request.user.pk  %}" class="btn btn-fill mb-10">Delete profile</a>
             </div>
         </div><!-- /.buttons -->
 

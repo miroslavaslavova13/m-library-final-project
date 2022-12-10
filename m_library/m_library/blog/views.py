@@ -14,6 +14,8 @@ def blog(request):
     search_form = SearchForm(request.GET)
     search_pattern = None
 
+    posts_paginate_by = 5
+
     if search_form.is_valid():
         search_pattern = search_form.cleaned_data['text']
 
@@ -21,6 +23,7 @@ def blog(request):
         posts = posts.filter(
             Q(title__icontains=search_pattern) |
             Q(description__icontains=search_pattern))
+
 
     context = {
         'posts': posts,
@@ -89,7 +92,7 @@ def comment_post(request, post_id):
             comment.save()
             return redirect('post details', pk=post.pk)
 
-@login_required
+
 class EditCommentView(UpdateView):
     model = BlogPostComment
     form_class = PostCommentEditForm
@@ -104,7 +107,7 @@ class EditCommentView(UpdateView):
         return reverse_lazy('post details',
                             kwargs={'pk': BlogPostComment.objects.filter(pk=self.object.pk).get().blog_post_id})
 
-@login_required
+
 class DeleteCommentView(DeleteView):
     model = BlogPostComment
 
