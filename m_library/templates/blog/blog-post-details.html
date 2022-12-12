@@ -34,9 +34,10 @@
                             <div class="post-comment">
 
                                 {% if comment.user.avatar %}
-                                <img class="img-res" src="/media/{{ comment.user.avatar }}" alt="{{ comment.user }}">
+                                    <img class="img-res" src="/media/{{ comment.user.avatar }}"
+                                         alt="{{ comment.user }}">
                                 {% else %}
-                                <img class="img-res" src="{% static 'img/default.png' %}" alt="{{ comment.user }}">
+                                    <img class="img-res" src="{% static 'img/default.png' %}" alt="{{ comment.user }}">
                                 {% endif %}
                                 <div class="post-comment-content">
 
@@ -70,13 +71,16 @@
 
                     </div><!-- /#PostComments -->
                     <div class="respond">
-                        <h3>Post a Comment</h3>
-                        <form method="post" action="{% url 'comment post' post_id=object.pk %}" class="form-horizontal">
-                            {{ comment_form.text|add_class:'form-control form-control-comment' }}
+                        {% if request.user.is_authenticated %}
+                            <h3>Post a Comment</h3>
+                            <form method="post" action="{% url 'comment post' post_id=object.pk %}"
+                                  class="form-horizontal">
+                                {{ comment_form.text|add_class:'form-control form-control-comment' }}
 
-                            <button class="btn btn-green">Add a comment</button>
-                            {% csrf_token %}
-                        </form>
+                                <button class="btn btn-green">Add a comment</button>
+                                {% csrf_token %}
+                            </form>
+                        {% endif %}
                     </div><!-- /.respond -->
                 </div>
                 <aside class="col-md-4">
@@ -84,10 +88,13 @@
 
                         {% if is_owner %}
                             <a href="{% url 'edit post' pk=object.pk %}" class="btn btn-green mb-10">Edit post</a>
-                            <a href="{% url 'delete post' pk=object.pk %}" class="btn btn-fill mb-10">Delete post</a>
+                            <a href="{% url 'delete post' pk=object.pk %}" class="btn btn-fill mb-10">Delete
+                                post</a>
                         {% endif %}
 
+
                         <div class="col-sm-15 mt-20"></div>
+
                         <div class="widget widget-recent-posts">
                             <h4 class="widget-title">Recent posts</h4>
                             {% for post in recent_posts %}

@@ -5,7 +5,6 @@ from m_library.books.views import book_details, add_book, edit_book, delete_book
 urlpatterns = [
     path('', all_books, name='all books'),
     path('add/', add_book, name='add book'),
-    # path('add/', AddBookView.as_view(), name='add book'),
     path('<int:pk>/', include([
         path('', book_details, name='book details'),
         path('edit/', edit_book, name='edit book'),

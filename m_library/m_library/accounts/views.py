@@ -1,11 +1,9 @@
-from django import forms
 from django.contrib.auth import login, get_user_model
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
-from m_library.accounts.forms import UserCreateForm, UserEditForm
+from m_library.accounts.forms import UserCreateForm
 from m_library.books.models import BookFavourite
 
 UserModel = get_user_model()
@@ -40,6 +38,7 @@ class ProfileDetailsView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user_favourite_books'] = BookFavourite.objects.filter(user_id=self.request.user.pk)
+        # context['is_owner'] = self.request.user ==
 
         return context
 
@@ -48,8 +47,6 @@ class ProfileEditView(UpdateView):
     template_name = 'accounts/edit-profile.html'
     model = UserModel
     fields = ('username', 'email', 'first_name', 'last_name', 'password', 'avatar')
-
-    # change the password
 
     def get_success_url(self):
         return reverse_lazy('profile details', kwargs={'pk': self.request.user.pk})

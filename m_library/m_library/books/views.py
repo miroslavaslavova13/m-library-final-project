@@ -1,8 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
+
 
 from m_library.books.forms import BookCreateForm, BookEditForm, BookDeleteForm
 from m_library.books.models import Book, BookFavourite
@@ -45,7 +44,6 @@ def add_book_to_favourites(request, book_id):
 def book_details(request, pk):
     book = Book.objects.filter(pk=pk).get()
     book.is_favourite = BookFavourite.objects.filter(book_id=pk, user_id=request.user.pk).count() > 0
-    print(book.book_file)
 
     context = {
         'book': book,
