@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -10,11 +11,9 @@ from m_library.common.forms import SearchForm
 
 
 def blog(request):
-    posts = BlogPost.objects.all()
+    posts = BlogPost.objects.all().order_by('-date_of_publication')
     search_form = SearchForm(request.GET)
     search_pattern = None
-
-    posts_paginate_by = 5
 
     if search_form.is_valid():
         search_pattern = search_form.cleaned_data['text']
@@ -24,10 +23,14 @@ def blog(request):
             Q(title__icontains=search_pattern) |
             Q(description__icontains=search_pattern))
 
+    paginator = Paginator(posts, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     context = {
         'posts': posts,
-        'search_form': search_form
+        'search_form': search_form,
+        'page_obj': page_obj
     }
     return render(request, 'blog/blog.html', context)
 

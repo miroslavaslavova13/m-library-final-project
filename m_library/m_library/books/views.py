@@ -11,7 +11,7 @@ from m_library.core.utils import is_owner
 
 
 def all_books(request):
-    books = Book.objects.all()
+    books = Book.objects.all().order_by('-date_of_publication')
     search_form = SearchForm(request.GET)
     search_pattern = None
 
@@ -45,10 +45,12 @@ def add_book_to_favourites(request, book_id):
 def book_details(request, pk):
     book = Book.objects.filter(pk=pk).get()
     book.is_favourite = BookFavourite.objects.filter(book_id=pk, user_id=request.user.pk).count() > 0
+    print(book.book_file)
 
     context = {
         'book': book,
         'is_owner': request.user == book.user,
+        'recent_books': Book.objects.all()[::-1][:4]
     }
     return render(request, 'books/book-details.html', context)
 
@@ -77,8 +79,6 @@ def edit_book(request, pk):
 
     if not is_owner(request, book):
         return redirect('book details', pk=pk)
-
-    print(request.method)
 
     if request.method == 'GET':
         form = BookEditForm(instance=book)

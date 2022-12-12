@@ -7,12 +7,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    {#                    <div class="project-img">#}
-                    {#                        <img src="{{ book.cover }}" class="img-res" alt="">#}
-                    {#                    </div><!-- /.project-img -->#}
-
                     <div class="col-sm-7">
-                        <img src="/media/{{ book.cover }}" class="wdn-stretch rounded-corners" alt="">
+                        {% if book.cover %}
+                            <img src="/media/{{ book.cover }}" class="wdn-stretch rounded-corners"
+                                 alt="{{ book.title }}">
+                        {% else %}
+                            <img src="{% static 'img/default-book-cover.png' %}" class="wdn-stretch rounded-corners"
+                                 alt="{{ book.title }}">
+                        {% endif %}
+
                     </div>
 
                 </div>
@@ -22,10 +25,10 @@
                     <div class="project-info">
 
                         <div class="project-date-category">
-                            <p><span>Author:</span>{{ book.author }}</p>
-                            <p><span>Genre:</span>{{ book.author }}</p>
-                            <p><span>Language:</span>{{ book.language }}</p>
-                            <p><span>Date:</span>{{ book.date_of_publication }}</p>
+                            <p><span>Author: </span>{{ book.author }}</p>
+                            <p><span>Genre: </span>{{ book.author }}</p>
+                            <p><span>Language: </span>{{ book.language }}</p>
+                            <p><span>Date: </span>{{ book.date_of_publication }}</p>
 
                             <p><span>Description:</span></p>
 
@@ -38,8 +41,11 @@
                     <div class="buttons mt-50">
                         <div class="row">
                             <div class="col-sm-10">
-                                {% if request.user.is_authenticated %}
 
+                                <a href="{{ book.book_file.url }}" class="btn btn-gray mb-10"
+                                   download="{{ book.book_file.url }}">Download</a>
+
+                                {% if request.user.is_authenticated %}
                                     <a href="{% url 'add to favourites' book_id=book.pk %}"
                                        class="btn btn-border mb-10">
                                         {% if not book.is_favourite %}
@@ -48,7 +54,6 @@
                                             Remove from favourites
                                         {% endif %}
                                     </a>
-
                                     {% if is_owner %}
                                         <a href="{% url 'edit book' pk=book.pk %}" class="btn btn-green mb-10">Edit
                                             book</a>
@@ -71,40 +76,21 @@
                 <h2>Other books</h2>
             </div>
             <div class="row">
-
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <div class="portfolio-item">
-                        <img src="{% static 'img/portfolio-1.jpg' %}" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <div class="portfolio-item">
-                        <img src="{% static 'img/portfolio-1.jpg' %}" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <div class="portfolio-item">
-                        <img src="{% static 'img/portfolio-1.jpg' %}" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <div class="portfolio-item">
-                        <img src="{% static 'img/portfolio-1.jpg' %}" class="img-res" alt="">
-                        <h4 class="portfolio-item-title">Portfolio item</h4>
-                        <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div><!-- /.portfolio-item -->
-                </div>
-
-
+                {% for book in recent_books %}
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            {% if book.cover %}
+                                <img src="/media/{{ book.cover }}" class="img-res" alt="{{ book.title }}">
+                            {% else %}
+                                <img src="{% static 'img/default-book-cover.png' %}" class="img-res"
+                                     alt="{{ book.title }}">
+                            {% endif %}
+                            <h4 class="portfolio-item-title">{{ book.title }}</h4>
+                            <a href="{% url 'book details' pk=book.pk %}"><i class="fa fa-arrow-right"
+                                                                             aria-hidden="true"></i></a>
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </section><!-- /.section-portfolio -->

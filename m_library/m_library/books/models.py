@@ -18,8 +18,7 @@ class Book(models.Model):
     author = models.CharField(max_length=MAX_AUTHOR_NAME_LEN, validators=(validate_only_letters,), null=False,
                               blank=False)
 
-    cover = models.ImageField(default='../staticfiles/img/default_book_cover.png', upload_to='books_covers/',
-                              null=False, blank=True)
+    cover = models.ImageField(upload_to='books_covers/', null=True, blank=True)
 
     language = models.CharField(max_length=MAX_LANGUAGE_LEN, validators=(validate_only_letters,), null=False,
                                 blank=False)

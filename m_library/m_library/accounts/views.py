@@ -16,10 +16,10 @@ class SignUpView(CreateView):
     form_class = UserCreateForm
     success_url = reverse_lazy('all books')
 
-    # def post(self, request, *args, **kwargs):
-    #     form = UserCreateForm(request.POST)
-    #     if form.is_valid():
-    #         login(request, self.request.user)
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        login(request, self.object)
+        return response
 
 
 class SignInView(LoginView):
@@ -49,7 +49,7 @@ class ProfileEditView(UpdateView):
     model = UserModel
     fields = ('username', 'email', 'first_name', 'last_name', 'password', 'avatar')
 
-    #change the password
+    # change the password
 
     def get_success_url(self):
         return reverse_lazy('profile details', kwargs={'pk': self.request.user.pk})

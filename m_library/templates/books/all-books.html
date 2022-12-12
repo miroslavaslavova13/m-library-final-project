@@ -28,7 +28,7 @@
                             {% if book.cover %}
                             <img src="/media/{{ book.cover }}" class="img-res" alt="{{ book.title }}">
                             {% else %}
-                            <img src="{% static 'img/default_book_cover.png' %}" class="img-res" alt="{{ book.title }}">
+                            <img src="{% static 'img/default-book-cover.png' %}" class="img-res" alt="{{ book.title }}">
                             {% endif %}
                             <h4 class="portfolio-item-title">{{ book.title }}</h4>
                             <a href="{% url 'book details' pk=book.pk %}"><i class="fa fa-arrow-right"

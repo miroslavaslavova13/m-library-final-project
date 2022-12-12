@@ -33,8 +33,11 @@
                         {% for comment in blogpost.blogpostcomment_set.all %}
                             <div class="post-comment">
 
-                                <img class="img-res" src="/media/{{ comment.user.avatar }}" alt="">
-
+                                {% if comment.user.avatar %}
+                                <img class="img-res" src="/media/{{ comment.user.avatar }}" alt="{{ comment.user }}">
+                                {% else %}
+                                <img class="img-res" src="{% static 'img/default.png' %}" alt="{{ comment.user }}">
+                                {% endif %}
                                 <div class="post-comment-content">
 
                                     <div class="post-comment-content-details">
@@ -49,16 +52,18 @@
 
                             {% if comment.user == request.user %}
 
-                            <div class="text-right comment-reply">
-                                <a href="{% url 'edit comment' post_id=object.pk pk=comment.pk%}">
-                                    <img class="edit-img" src="{% static 'img/edit-icon.png' %} " style="height: 16px;"
-                                         alt="edit button">
-                                </a>
-                                <a href="{% url 'delete comment' post_id=object.pk pk=comment.pk%}">
-                                    <img class="edit-img" src="{% static 'img/delete-icon.png' %} " style="height: 16px;"
-                                         alt="edit button">
-                                </a>
-                            </div>
+                                <div class="text-right comment-reply">
+                                    <a href="{% url 'edit comment' post_id=object.pk pk=comment.pk %}">
+                                        <img class="edit-img" src="{% static 'img/edit-icon.png' %} "
+                                             style="height: 16px;"
+                                             alt="edit button">
+                                    </a>
+                                    <a href="{% url 'delete comment' post_id=object.pk pk=comment.pk %}">
+                                        <img class="edit-img" src="{% static 'img/delete-icon.png' %} "
+                                             style="height: 16px;"
+                                             alt="edit button">
+                                    </a>
+                                </div>
                             {% endif %}
                         {% endfor %}
 
@@ -87,7 +92,7 @@
                             <h4 class="widget-title">Recent posts</h4>
                             {% for post in recent_posts %}
                                 <ul class="list-unstyled">
-                                    <li><a href="#">{{ post.title }}</a></li>
+                                    <li><a href="{% url 'post details' pk=post.pk %}">{{ post.title }}</a></li>
                                 </ul>
                             {% endfor %}
                         </div><!-- /.widget-recent-posts -->
