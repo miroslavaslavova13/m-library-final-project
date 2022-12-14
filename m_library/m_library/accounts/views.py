@@ -1,5 +1,7 @@
 from django.contrib.auth import login, get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
+
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
@@ -31,19 +33,18 @@ class SignOutView(LogoutView):
     next_page = reverse_lazy('home')
 
 
-class ProfileDetailsView(DetailView):
+class ProfileDetailsView(LoginRequiredMixin, DetailView):
     template_name = 'accounts/profile-details.html'
     model = UserModel
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user_favourite_books'] = BookFavourite.objects.filter(user_id=self.request.user.pk)
-        # context['is_owner'] = self.request.user ==
 
         return context
 
 
-class ProfileEditView(UpdateView):
+class ProfileEditView(LoginRequiredMixin, UpdateView):
     template_name = 'accounts/edit-profile.html'
     model = UserModel
     fields = ('username', 'email', 'first_name', 'last_name', 'password', 'avatar')
@@ -52,7 +53,7 @@ class ProfileEditView(UpdateView):
         return reverse_lazy('profile details', kwargs={'pk': self.request.user.pk})
 
 
-class ProfileDeleteView(DeleteView):
+class ProfileDeleteView(LoginRequiredMixin, DeleteView):
     model = UserModel
     template_name = 'accounts/delete-profile.html'
     success_url = reverse_lazy('home')

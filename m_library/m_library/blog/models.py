@@ -6,7 +6,7 @@ UserModel = get_user_model()
 
 
 class BlogPost(models.Model):
-    MAX_TITLE_LEN = 30
+    MAX_TITLE_LEN = 100
 
     title = models.CharField(max_length=MAX_TITLE_LEN, null=False, blank=False)
 

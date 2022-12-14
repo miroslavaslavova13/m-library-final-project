@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, redirect
@@ -50,7 +51,7 @@ class PostDetailsView(DetailView):
         return context
 
 
-class AddPostView(CreateView):
+class AddPostView(LoginRequiredMixin, CreateView):
     model = BlogPost
     form_class = PostCreateForm
     template_name = 'blog/add-blog-post.html'
@@ -65,16 +66,30 @@ class AddPostView(CreateView):
         return redirect('blog')
 
 
-class EditPostView(UpdateView):
+class EditPostView(LoginRequiredMixin, UpdateView):
     model = BlogPost
     form_class = PostEditForm
     template_name = 'blog/edit-blog-post.html'
+
+    # def get(self, request, *args, **kwargs):
+    #     obj = self.get_object()
+    #     if self.request.user.pk != obj.user.pk:
+    #         return redirect('post details', pk=obj.pk)
+    #     else:
+    #         return render(request, 'blog/edit-blog-post.html')
+        # render(request, 'blog/edit-blog-post.html', kwargs={'pk': obj.pk})
+        # render(request, 'blog/edit-blog-post.html', context={'pk': obj.pk})
+        # render(request, 'blog/edit-blog-post.html', context)
+        # reverse_lazy('edit post', kwargs={'pk': self.object.pk})
+        # reverse_lazy('edit post', kwargs={'pk': obj.pk})
+        # redirect('edit post', pk=obj.pk)
+
 
     def get_success_url(self):
         return reverse_lazy('post details', kwargs={'pk': self.object.pk})
 
 
-class DeletePostView(DeleteView):
+class DeletePostView(LoginRequiredMixin, DeleteView):
     model = BlogPost
     template_name = 'blog/delete-blog-post.html'
     success_url = reverse_lazy('blog')
@@ -96,7 +111,7 @@ def comment_post(request, post_id):
             return redirect('post details', pk=post.pk)
 
 
-class EditCommentView(UpdateView):
+class EditCommentView(LoginRequiredMixin, UpdateView):
     model = BlogPostComment
     form_class = PostCommentEditForm
     template_name = 'blog/edit-comment.html'
@@ -111,7 +126,7 @@ class EditCommentView(UpdateView):
                             kwargs={'pk': BlogPostComment.objects.filter(pk=self.object.pk).get().blog_post_id})
 
 
-class DeleteCommentView(DeleteView):
+class DeleteCommentView(LoginRequiredMixin, DeleteView):
     model = BlogPostComment
 
     def get(self, *args, **kwargs):
