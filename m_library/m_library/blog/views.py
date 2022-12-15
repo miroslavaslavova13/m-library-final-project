@@ -71,20 +71,6 @@ class EditPostView(LoginRequiredMixin, UpdateView):
     form_class = PostEditForm
     template_name = 'blog/edit-blog-post.html'
 
-    # def get(self, request, *args, **kwargs):
-    #     obj = self.get_object()
-    #     if self.request.user.pk != obj.user.pk:
-    #         return redirect('post details', pk=obj.pk)
-    #     else:
-    #         return render(request, 'blog/edit-blog-post.html')
-        # render(request, 'blog/edit-blog-post.html', kwargs={'pk': obj.pk})
-        # render(request, 'blog/edit-blog-post.html', context={'pk': obj.pk})
-        # render(request, 'blog/edit-blog-post.html', context)
-        # reverse_lazy('edit post', kwargs={'pk': self.object.pk})
-        # reverse_lazy('edit post', kwargs={'pk': obj.pk})
-        # redirect('edit post', pk=obj.pk)
-
-
     def get_success_url(self):
         return reverse_lazy('post details', kwargs={'pk': self.object.pk})
 

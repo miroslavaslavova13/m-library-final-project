@@ -1,7 +1,6 @@
 from django.contrib.auth import login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
-
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
@@ -47,7 +46,7 @@ class ProfileDetailsView(LoginRequiredMixin, DetailView):
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     template_name = 'accounts/edit-profile.html'
     model = UserModel
-    fields = ('username', 'email', 'first_name', 'last_name', 'password', 'avatar')
+    fields = ('username', 'email', 'first_name', 'last_name', 'avatar')
 
     def get_success_url(self):
         return reverse_lazy('profile details', kwargs={'pk': self.request.user.pk})

@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.shortcuts import render, redirect
-
+from django.shortcuts import render, redirect, get_object_or_404
 
 from m_library.books.forms import BookCreateForm, BookEditForm, BookDeleteForm
 from m_library.books.models import Book, BookFavourite
@@ -73,7 +72,7 @@ def add_book(request):
 
 @login_required
 def edit_book(request, pk):
-    book = Book.objects.filter(pk=pk).get()
+    book = get_object_or_404(Book, pk=pk)
 
     if not is_owner(request, book):
         return redirect('book details', pk=pk)
