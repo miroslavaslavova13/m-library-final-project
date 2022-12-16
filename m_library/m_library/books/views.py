@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -41,7 +41,7 @@ def add_book_to_favourites(request, book_id):
 
 
 def book_details(request, pk):
-    book = Book.objects.filter(pk=pk).get()
+    book = get_object_or_404(Book, pk=pk)
     book.is_favourite = BookFavourite.objects.filter(book_id=pk, user_id=request.user.pk).count() > 0
 
     context = {
@@ -95,7 +95,7 @@ def edit_book(request, pk):
 
 @login_required
 def delete_book(request, pk):
-    book = Book.objects.filter(pk=pk).get()
+    book = get_object_or_404(Book, pk=pk)
 
     if not is_owner(request, book):
         return redirect('book details', pk=pk)

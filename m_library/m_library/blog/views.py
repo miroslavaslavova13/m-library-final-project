@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 
@@ -66,24 +66,30 @@ class AddPostView(LoginRequiredMixin, CreateView):
         return redirect('blog')
 
 
-class EditPostView(LoginRequiredMixin, UpdateView):
+class EditPostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = BlogPost
     form_class = PostEditForm
     template_name = 'blog/edit-blog-post.html'
+
+    def test_func(self):
+        return self.get_object().user == self.request.user
 
     def get_success_url(self):
         return reverse_lazy('post details', kwargs={'pk': self.object.pk})
 
 
-class DeletePostView(LoginRequiredMixin, DeleteView):
+class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = BlogPost
     template_name = 'blog/delete-blog-post.html'
     success_url = reverse_lazy('blog')
 
+    def test_func(self):
+        return self.get_object().user == self.request.user
+
 
 @login_required
 def comment_post(request, post_id):
-    post = BlogPost.objects.filter(pk=post_id).get()
+    post = get_object_or_404(BlogPost, pk=post_id)
 
     if request.method == "GET":
         form = PostCommentForm()
@@ -97,10 +103,13 @@ def comment_post(request, post_id):
             return redirect('post details', pk=post.pk)
 
 
-class EditCommentView(LoginRequiredMixin, UpdateView):
+class EditCommentView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = BlogPostComment
     form_class = PostCommentEditForm
     template_name = 'blog/edit-comment.html'
+
+    def test_func(self):
+        return self.get_object().user == self.request.user
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -112,8 +121,11 @@ class EditCommentView(LoginRequiredMixin, UpdateView):
                             kwargs={'pk': BlogPostComment.objects.filter(pk=self.object.pk).get().blog_post_id})
 
 
-class DeleteCommentView(LoginRequiredMixin, DeleteView):
+class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = BlogPostComment
+
+    def test_func(self):
+        return self.get_object().user == self.request.user
 
     def get(self, *args, **kwargs):
         return self.post(*args, **kwargs)

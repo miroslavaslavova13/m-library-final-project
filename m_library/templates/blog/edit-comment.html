@@ -9,7 +9,7 @@
                 <div class="col-md-8">
 
                     <div class="respond">
-                        <h3>Post a Comment</h3>
+                        <h3>Edit comment</h3>
                         <form method="post" action="{% url 'edit comment' post_id=post_id pk=object.pk%}" class="form-horizontal">
 
                             {{ form.text|add_class:'form-control form-control-comment' }}
