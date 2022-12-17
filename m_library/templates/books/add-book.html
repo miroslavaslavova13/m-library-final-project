@@ -11,15 +11,19 @@
                     <div class="form-group">
                         <label for="name">*Title</label>
                         {{ form.title|add_class:'form-control' }}
+                        {{ form.title.errors }}
 
                         <label for="email">*Author</label>
                         {{ form.author|add_class:'form-control' }}
+                        {{ form.author.errors }}
 
                         <label for="name">*Genre</label>
                         {{ form.genre|add_class:'form-control' }}
+                        {{ form.genre.errors }}
 
                         <label for="name">*Language</label>
                         {{ form.language|add_class:'form-control' }}
+                        {{ form.language.errors }}
 
                         <label for="name">*Description</label>
                         {{ form.description|add_class:'form-control' }}
@@ -29,6 +33,7 @@
 
                         <label for="name">*Upload book file</label>
                         {{ form.book_file|add_class:'form-control' }}
+                        {{ form.book_file.errors }}
 
                     </div>
                 </div>

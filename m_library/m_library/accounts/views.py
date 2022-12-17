@@ -38,6 +38,7 @@ class ProfileDetailsView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
     def test_func(self):
         return self.get_object() == self.request.user
+    # TODO change status code to 404 and render 404.html
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -54,6 +55,8 @@ class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.get_object() == self.request.user
 
+    # TODO change status code to 404 and render 404.html
+
     def get_success_url(self):
         return reverse_lazy('profile details', kwargs={'pk': self.request.user.pk})
 
@@ -64,4 +67,5 @@ class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return self.get_object() == self.request.user
+        return self.get_object() == self.request.user or self.request.user.is_superuser
+    # TODO change status code to 404 and render 404.html

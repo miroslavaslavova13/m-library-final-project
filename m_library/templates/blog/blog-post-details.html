@@ -16,11 +16,11 @@
                             <div class="post-meta">
                                     <span class="post-author">
                                         {% if blogpost.user.avatar %}
-                                        <a href="#"><img class="img-res" src="/media/{{ blogpost.user.avatar }}"
-                                                         alt="">{{ blogpost.user }}</a>
+                                            <a href="#"><img class="img-res" src="/media/{{ blogpost.user.avatar }}"
+                                                             alt="">{{ blogpost.user }}</a>
                                         {% else %}
-                                        <a href="#"><img class="img-res" src="{% static 'img/default.png' %}"
-                                                         alt="">{{ blogpost.user }}</a>
+                                            <a href="#"><img class="img-res" src="{% static 'img/default.png' %}"
+                                                             alt="">{{ blogpost.user }}</a>
                                         {% endif %}
                                     </span>
                                 <span class="post-date">
@@ -47,7 +47,12 @@
                                 <div class="post-comment-content">
 
                                     <div class="post-comment-content-details">
-                                        <p class="post-comment-author-name">{{ comment.user }}</p>
+                                        <p class="post-comment-author-name">{{ comment.user }}
+                                            {% if comment.user.get_full_name %}
+                                                {{ comment.user.get_full_name }}
+                                            {% endif %}
+                                        </p>
+
                                         <p class="post-comment-date"><i class="fa fa-calendar"
                                                                         aria-hidden="true"></i>{{ comment.publication_date_and_time }}
                                         </p>
@@ -56,21 +61,23 @@
                                 </div><!-- /.post-comment-content -->
                             </div><!-- /.post-comment -->
 
-                            {% if comment.user == request.user %}
+                            {% if comment.user == request.user or is_staff or is_superuser %}
 
                                 <div class="text-right comment-reply">
-                                    <a href="{% url 'edit comment' post_id=object.pk pk=comment.pk %}">
-                                        <img class="edit-img" src="{% static 'img/edit-icon.png' %} "
-                                             style="height: 16px;"
-                                             alt="edit button">
-                                    </a>
-                                    <a href="{% url 'delete comment' post_id=object.pk pk=comment.pk %}">
-                                        <img class="edit-img" src="{% static 'img/delete-icon.png' %} "
-                                             style="height: 16px;"
-                                             alt="edit button">
-                                    </a>
-                                </div>
+                                <a href="{% url 'edit comment' post_id=object.pk pk=comment.pk %}">
+                                    <img class="edit-img" src="{% static 'img/edit-icon.png' %} "
+                                         style="height: 16px;"
+                                         alt="edit button">
+                                </a>
                             {% endif %}
+                        {% if comment.user == request.user or is_superuser %}
+                            <a href="{% url 'delete comment' post_id=object.pk pk=comment.pk %}">
+                                <img class="edit-img" src="{% static 'img/delete-icon.png' %} "
+                                     style="height: 16px;"
+                                     alt="edit button">
+                            </a>
+                            </div>
+                        {% endif %}
                         {% endfor %}
 
 
@@ -91,15 +98,15 @@
                 <aside class="col-md-4">
                     <div class="sidebar">
 
-                        {% if is_owner %}
+                        {% if is_owner or is_staff or is_superuser %}
                             <a href="{% url 'edit post' pk=object.pk %}" class="btn btn-green mb-10">Edit post</a>
+                        {% endif %}
+                        {% if is_owner or is_superuser %}
                             <a href="{% url 'delete post' pk=object.pk %}" class="btn btn-fill mb-10">Delete
                                 post</a>
                         {% endif %}
 
-
                         <div class="col-sm-15 mt-20"></div>
-
                         <div class="widget widget-recent-posts">
                             <h4 class="widget-title">Recent posts</h4>
                             {% for post in recent_posts %}
@@ -108,8 +115,6 @@
                                 </ul>
                             {% endfor %}
                         </div><!-- /.widget-recent-posts -->
-
-
                     </div><!-- /.sidebar -->
                 </aside>
             </div>

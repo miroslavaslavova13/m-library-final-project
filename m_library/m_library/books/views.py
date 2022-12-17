@@ -30,23 +30,31 @@ def all_books(request):
 
 @login_required
 def add_book_to_favourites(request, book_id):
-    user_added_to_favourites = BookFavourite.objects.filter(book_id=book_id, user_id=request.user.pk)
+    try:
+        book = get_object_or_404(Book, pk=book_id)
+        user_added_to_favourites = BookFavourite.objects.filter(book_id=book.pk, user_id=request.user.pk)
 
-    if user_added_to_favourites:
-        user_added_to_favourites.delete()
-    else:
-        BookFavourite.objects.create(book_id=book_id, user_id=request.user.pk)
+        if user_added_to_favourites:
+            user_added_to_favourites.delete()
+        else:
+            BookFavourite.objects.create(book_id=book_id, user_id=request.user.pk)
 
-    return redirect(request.META['HTTP_REFERER'] + f'#book-{book_id}')
+        return redirect('book details', pk=book_id)
+    except KeyError:
+        # TODO change the status code to 404
+        return render(request, '404.html')
 
 
 def book_details(request, pk):
     book = get_object_or_404(Book, pk=pk)
     book.is_favourite = BookFavourite.objects.filter(book_id=pk, user_id=request.user.pk).count() > 0
 
+
     context = {
         'book': book,
         'is_owner': request.user == book.user,
+        'is_staff': request.user.is_staff,
+        'is_superuser': request.user.is_superuser,
         'recent_books': Book.objects.all()[::-1][:4]
     }
     return render(request, 'books/book-details.html', context)
@@ -74,43 +82,48 @@ def add_book(request):
 def edit_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
 
-    if not is_owner(request, book):
-        return redirect('book details', pk=pk)
+    if request.user.is_superuser or request.user.is_staff or is_owner(request, book):
 
-    if request.method == 'GET':
-        form = BookEditForm(instance=book)
+        if request.method == 'GET':
+            form = BookEditForm(instance=book)
+        else:
+            form = BookEditForm(request.POST, instance=book)
+            if form.is_valid():
+                form.save()
+                return redirect('book details', pk=pk)
+
+        context = {
+            'form': form,
+            'pk': pk
+        }
+
+        return render(request, 'books/edit-book.html', context)
+
     else:
-        form = BookEditForm(request.POST, instance=book)
-        if form.is_valid():
-            form.save()
-            return redirect('book details', pk=pk)
-
-    context = {
-        'form': form,
-        'pk': pk
-    }
-
-    return render(request, 'books/edit-book.html', context)
+        return redirect('book details', pk=pk)
 
 
 @login_required
 def delete_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
 
-    if not is_owner(request, book):
+    if request.user.is_superuser or is_owner(request, book):
+
+        if request.method == 'GET':
+            form = BookDeleteForm(instance=book)
+        else:
+            form = BookDeleteForm(request.POST or None, instance=book)
+            if form.is_valid():
+                form.save()
+                return redirect('all books')
+
+        context = {
+            'form': form,
+            'pk': pk
+        }
+
+        return render(request, 'books/delete-book.html', context)
+
+    else:
         return redirect('book details', pk=pk)
 
-    if request.method == 'GET':
-        form = BookDeleteForm(instance=book)
-    else:
-        form = BookDeleteForm(request.POST or None, instance=book)
-        if form.is_valid():
-            form.save()
-            return redirect('all books')
-
-    context = {
-        'form': form,
-        'pk': pk
-    }
-
-    return render(request, 'books/delete-book.html', context)

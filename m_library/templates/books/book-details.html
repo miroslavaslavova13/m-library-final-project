@@ -54,9 +54,11 @@
                                             Remove from favourites
                                         {% endif %}
                                     </a>
-                                    {% if is_owner %}
+                                    {% if is_owner or is_staff or is_superuser%}
                                         <a href="{% url 'edit book' pk=book.pk %}" class="btn btn-green mb-10">Edit
                                             book</a>
+                                        {% endif %}
+                                            {% if is_owner or is_superuser %}
                                         <a href="{% url 'delete book' pk=book.pk %}" class="btn btn-fill mb-10">Delete
                                             book</a>
                                     {% endif %}

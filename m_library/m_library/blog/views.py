@@ -44,6 +44,8 @@ class PostDetailsView(DetailView):
         context = super().get_context_data(**kwargs)
 
         context['is_owner'] = self.request.user == self.object.user
+        context['is_staff'] = self.request.user.is_staff
+        context['is_superuser'] = self.request.user.is_superuser
         context['comments_count'] = self.object.blogpostcomment_set.count()
         context['recent_posts'] = (BlogPost.objects.all()[::-1])[:5]
         context['comment_form'] = PostCommentForm()
@@ -72,7 +74,9 @@ class EditPostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'blog/edit-blog-post.html'
 
     def test_func(self):
-        return self.get_object().user == self.request.user
+        return self.get_object().user == self.request.user or self.request.user.is_staff or self.request.user.is_superuser
+
+    # TODO change status code to 404 and render 404.html
 
     def get_success_url(self):
         return reverse_lazy('post details', kwargs={'pk': self.object.pk})
@@ -84,7 +88,8 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('blog')
 
     def test_func(self):
-        return self.get_object().user == self.request.user
+        return self.get_object().user == self.request.user or self.request.user.is_superuser
+    # TODO change status code to 404 and render 404.html
 
 
 @login_required
@@ -109,7 +114,9 @@ class EditCommentView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'blog/edit-comment.html'
 
     def test_func(self):
-        return self.get_object().user == self.request.user
+        return self.get_object().user == self.request.user or self.request.user.is_staff or self.request.user.is_superuser
+
+    # TODO change status code to 404 and render 404.html
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -125,7 +132,9 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = BlogPostComment
 
     def test_func(self):
-        return self.get_object().user == self.request.user
+        return self.get_object().user == self.request.user or self.request.user.is_superuser
+
+    # TODO change status code to 404 and render 404.html
 
     def get(self, *args, **kwargs):
         return self.post(*args, **kwargs)

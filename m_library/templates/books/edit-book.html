@@ -11,21 +11,27 @@
                     <div class="form-group">
                         <label for="title">*Title</label>
                         {{ form.title|add_class:'form-control' }}
+                        {{ form.title.errors }}
 
                         <label for="author">*Author</label>
                         {{ form.author|add_class:'form-control' }}
+                        {{ form.author.errors }}
 
                         <label for="genre">*Genre</label>
                         {{ form.genre|add_class:'form-control' }}
+                        {{ form.genre.errors }}
 
                         <label for="language">*Language</label>
                         {{ form.language|add_class:'form-control' }}
+                        {{ form.language.errors }}
 
                         <label for="description">*Description</label>
                         {{ form.description|add_class:'form-control' }}
+                        {{ form.description.errors }}
 
                         <label for="cover">Cover</label>
                         {{ form.cover|add_class:'form-control' }}
+                        {{ form.cover.errors }}
                     </div>
                 </div>
 
