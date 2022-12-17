@@ -1,6 +1,8 @@
 from django.contrib.auth import login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
@@ -16,8 +18,10 @@ class SignUpView(CreateView):
     success_url = reverse_lazy('all books')
 
     def post(self, request, *args, **kwargs):
+        form = UserCreateForm(request.POST, initial={'user': request.user})
         response = super().post(request, *args, **kwargs)
-        login(request, self.object)
+        if form.is_valid():
+            login(request, self.object)
         return response
 
 
@@ -38,7 +42,6 @@ class ProfileDetailsView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
     def test_func(self):
         return self.get_object() == self.request.user
-    # TODO change status code to 404 and render 404.html
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

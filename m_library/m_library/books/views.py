@@ -49,9 +49,6 @@ def book_details(request, pk):
     book = get_object_or_404(Book, pk=pk)
     book.is_favourite = BookFavourite.objects.filter(book_id=pk, user_id=request.user.pk).count() > 0
 
-    print(request.user.is_superuser)
-    print(request.user.is_staff)
-    print(request.user == book.user)
 
 
     context = {

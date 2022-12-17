@@ -9,13 +9,15 @@
                 {{ form }}
                 <div class="text-center mt-20">
                     <button class="btn btn-green">Delete</button>
-                    <a class="btn btn-primary" href="javascript:history.back()">
-                        <button class="btn btn-green">Go back</button>
-                    </a>
                 </div>
                 {% csrf_token %}
-
             </form>
+
+            <div class="text-center mt-20">
+                <a href="javascript:history.back()">
+                    <button class="btn btn-green">Go back</button>
+                </a>
+            </div>
         </div>
     </div>
 {% endblock %}
