@@ -67,5 +67,5 @@ class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return self.get_object() == self.request.user or self.request.user.is_superuser
+        return self.get_object() == self.request.user
     # TODO change status code to 404 and render 404.html

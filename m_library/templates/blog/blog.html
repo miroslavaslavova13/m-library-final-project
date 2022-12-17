@@ -14,7 +14,7 @@
                             <div class="post-content">
                                 <h3 class="post-title"><a
                                         href="{% url 'post details' pk=post.pk %}">{{ post.title }}</a></h3>
-                                <p>{{ post.description }}</p>
+                                <p>{{ post.description|slice:"180" }}</p>
                                 <div class="text-right">
                                     <a class="read-more" href="{% url 'post details' pk=post.pk %}">Read more</a>
                                 </div>

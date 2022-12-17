@@ -10,9 +10,11 @@
                 <div class="col-sm-15 mt-20">
                     <div class="form-group">
                         <label for="name">*Title</label>
+                        {{ form.title.errors }}
                         {{ form.title|add_class:'form-control' }}
 
                         <label for="post">*Your post description</label>
+                        {{ form.description.errors }}
                         {{ form.description|add_class:'form-control form-control-comment' }}
 
 
