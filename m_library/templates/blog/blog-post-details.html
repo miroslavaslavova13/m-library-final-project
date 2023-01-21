@@ -100,6 +100,7 @@
 
                         {% if is_owner or is_staff or is_superuser %}
                             <a href="{% url 'edit post' pk=object.pk %}" class="btn btn-green mb-10">Edit post</a>
+
                         {% endif %}
                         {% if is_owner or is_superuser %}
                             <a href="{% url 'delete post' pk=object.pk %}" class="btn btn-fill mb-10">Delete
