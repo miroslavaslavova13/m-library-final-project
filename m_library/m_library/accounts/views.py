@@ -19,10 +19,11 @@ class SignUpView(CreateView):
 
     def post(self, request, *args, **kwargs):
         form = UserCreateForm(request.POST, initial={'user': request.user})
-        response = super().post(request, *args, **kwargs)
         if form.is_valid():
-            login(request, self.object)
-        return response
+            new_user = form.save()
+            login(request, new_user)
+            return redirect('all books')
+        return super().post(request, *args, **kwargs)
 
 
 class SignInView(LoginView):
