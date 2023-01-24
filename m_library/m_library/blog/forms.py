@@ -22,8 +22,8 @@ class PostDeleteForm(DisabledFormMixin, PostBaseForm):
     disabled_fields = '__all__'
 
     def __init__(self, *args, **kwargs):
-        self._disable_fields()
         super().__init__(*args, **kwargs)
+        self._disable_fields()
 
     def save(self, commit=True):
         if commit:
