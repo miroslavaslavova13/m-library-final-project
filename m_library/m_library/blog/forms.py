@@ -27,7 +27,7 @@ class PostDeleteForm(DisabledFormMixin, PostBaseForm):
 
     def save(self, commit=True):
         if commit:
-            BlogPostComment.objects.filter(post_id=self.instance.id).delete()
+            BlogPostComment.objects.filter(blog_post_id=self.instance.id).delete()
 
             self.instance.delete()
 
